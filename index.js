@@ -12,7 +12,7 @@ inquirer
     ]).then(function(inquirerResponse) {
         console.log("Welcome To Bored API, " + inquirerResponse.name)
     })
-
+    console.log("amari was here")
 // var queryUrl = "http://www.boredapi.com/api/activity/";
 
 // console.log(queryUrl)
