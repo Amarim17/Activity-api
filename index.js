@@ -10,9 +10,14 @@ inquirer
         }
     
     ]).then(function(inquirerResponse) {
-        console.log("Welcome To Bored API, " + inquirerResponse.name)
+        console.log("")
+        console.log("              ------------------------------------")
+        console.log("                   Welcome To Bored API, " + inquirerResponse.name)
+        console.log("              ------------------------------------")
+        console.log("   In this application you are able to find activities near you")
+        console.log("                by just providing an address and")
+        console.log("        the type of activity which you are looking to do.")
     })
-    console.log("amari was here")
 // var queryUrl = "http://www.boredapi.com/api/activity/";
 
 // console.log(queryUrl)
