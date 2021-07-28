@@ -1,5 +1,28 @@
 // var axios = require("axios");
 var inquirer = require("inquirer");
+var NodeGeocoder = require("node-geocoder");
+
+var options = {
+    provider: "mapquest",
+    apiKey: "YOUR-MAPQUEST-API-CONSUMER-KEY"
+  };
+
+  var geocoder = NodeGeocoder(options);
+
+// Format the address using process.argv
+var address = process.argv.slice(2).join(" ");
+
+// Log the address we built
+console.log("Searching for " + address);
+
+
+geocoder.geocode(address, function(err, data) {
+
+    // Then console log the result and stringify it.
+    // Note the argument of "2" being included in the JSON stringify. This makes the JSON output pretty.
+    // See link here: http://stackoverflow.com/questions/4810841/how-can-i-pretty-print-json-using-javascript
+    console.log(JSON.stringify(data, null, 2));
+  });
 
 inquirer
     .prompt([
@@ -12,7 +35,7 @@ inquirer
     ]).then(function(inquirerResponse) {
         console.log("Welcome To Bored API, " + inquirerResponse.name)
     })
-
+    console.log("amari was here")
 // var queryUrl = "http://www.boredapi.com/api/activity/";
 
 // console.log(queryUrl)
