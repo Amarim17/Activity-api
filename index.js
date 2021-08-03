@@ -44,45 +44,41 @@ var inquirer = require("inquirer");
                                 inquirer
                                     .prompt([
                                         {
-                                            type: "list",
+                                            type: "confirm",
                                             message:" ",
-                                            choices: ["Yes", "No"],
-                                            name: "yesNo"
+                                            name: "confirmAddr"
                                         }
                                     ]).then(function(inquirerResponse) {
+                                        if(inquirerResponse.confirmAddr) {
+                                        activityFunc()
+                                        inquirer
+                                        .prompt([
+                                            {
+                                                type: "confirm",
+                                                message: "Would you like to try another activity in the same category?",
+                                                name: "reroll"
+                                            }
+                                        ]).then(function(inquirerResponse) {
+                                            var queryUrl1 = "http://www.boredapi.com/api/activity?type=" + inquirerResponse.type;
+                                            var choices = inquirerResponse.type
+                                    
+                                            axios.get(queryUrl1).then(
+                                                function(response) {
+                                                    console.log("              Activity")
+                                                    console.log("" + response.data.activity + "!!");
+                                                    if (response.data.participants = 1) {
+                                                        console.log("This activity requires " + response.data.participants + " person")
+                                                    }
+                                                    else {
+                                                        console.log("This activity requires at least " + inquirerResponse.data.participants + " people")
+                                                    }
+                                                    console.log("The type of activity is " + response.data.type);
+                                                })
+                                        })
+                                        }
 
-                                        if(inquirerResponse.yesNo === "Yes") {
 
-                                            inquirer
-                                            .prompt([
-                                                {
-                                                    type: "list",
-                                                    message: "What type of activity would you like to do?",
-                                                    choices: ['charity', 'cooking', 'music', 'diy', 'education', 'social', 'busywork', 'recreational', 'relaxation'],
-                                                    name: "type"
-                                                }
-                                            ])
-                                            .then(function(inquirerResponse) {
-                                                var queryUrl1 = "http://www.boredapi.com/api/activity?type=" + inquirerResponse.type;
-                            
-                                                axios.get(queryUrl1).then(
-                                                    function(response) {
-                                                        console.log("              Activity")
-                                                        console.log("" + response.data.activity + "!!");
-                                                        if (response.data.participants = 1) {
-                                                            console.log("This activity requires " + response.data.participants + " person")
-                                                        }
-                                                        else {
-                                                            console.log("This activity requires at least " + inquirerResponse.data.participants + " people")
-                                                        }
-                                                        console.log("The type of activity is " + response.data.type);
-                                                }
-                                            )
-                            
-                            
-                            })
-
-                                        } else {
+                                         else {
                                             inquirer
                                             .prompt ([
                                                 {
@@ -113,35 +109,7 @@ var inquirer = require("inquirer");
                                                             ]).then(function(inquirerResponse) {
                         
                                                                 if(inquirerResponse.yesNo === "Yes") {
-                        
-                                                                    inquirer
-                                                                    .prompt([
-                                                                        {
-                                                                            type: "list",
-                                                                            message: "What type of activity would you like to do?",
-                                                                            choices: ['charity', 'cooking', 'music', 'diy', 'education', 'social', 'busywork', 'recreational', 'relaxation'],
-                                                                            name: "type"
-                                                                        }
-                                                                    ])
-                                                                    .then(function(inquirerResponse) {
-                                                                        var queryUrl1 = "http://www.boredapi.com/api/activity?type=" + inquirerResponse.type;
-                                                    
-                                                                        axios.get(queryUrl1).then(
-                                                                            function(response) {
-                                                                                console.log("              Activity")
-                                                                                console.log("" + response.data.activity + "!!");
-                                                                                if (response.data.participants = 1) {
-                                                                                    console.log("This activity requires " + response.data.participants + " person")
-                                                                                }
-                                                                                else {
-                                                                                    console.log("This activity requires at least " + inquirerResponse.data.participants + " people")
-                                                                                }
-                                                                                console.log("The type of activity is " + response.data.type);
-                                                                        }
-                                                                    )
-                                                    
-                                                    
-                                                    })
+                                                                    activityFunc()
                         
                                                                 } else {
                                                                     console.log("Something went wrong, please run again and try another address")
@@ -151,29 +119,12 @@ var inquirer = require("inquirer");
                         
                                                             }
                                                         )
-                        
-                        
-                                                                //----------------JOSE-----------------//
-                        
-                        
-                                                             //------AFTER CODE-------//
-                                // inquirer
-                                // .prompt([
-                                //     {
-                                //         type: "input",
-                                //         message: "In a scale of 1-5 how much fun did you have during this activity?",
-                                //         name: "funScale"
-                        
-                                //     }
-                                // ])
-                                // .then(function(inquirerResponse) {
-                                //     if (inquirerResponse.funScale >= 1 && inquirerResponse.funScale <= 5) {
-                                //         console.log("         We are glad you enjoyed the activity!")
-                                //     }
-                                // }
-                                // )
                             })
                                         }
+
+
+
+
 
                                     })
 
@@ -181,25 +132,7 @@ var inquirer = require("inquirer");
                                 )
 
 
-                                        //----------------JOSE-----------------//
 
-
-                                     //------AFTER CODE-------//
-        // inquirer
-        // .prompt([
-        //     {
-        //         type: "input",
-        //         message: "In a scale of 1-5 how much fun did you have during this activity?",
-        //         name: "funScale"
-
-        //     }
-        // ])
-        // .then(function(inquirerResponse) {
-        //     if (inquirerResponse.funScale >= 1 && inquirerResponse.funScale <= 5) {
-        //         console.log("         We are glad you enjoyed the activity!")
-        //     }
-        // }
-        // )
     })
                         //-------------------------------------------------------------------//
 
@@ -207,27 +140,39 @@ var inquirer = require("inquirer");
 
 
 
-
-// axios.get(queryUrl).then(
-//     function(response) {
-//       console.log(response.data);
-//     })
-//     .catch(function(error) {
-//       if (error.response) {
-
-//         console.log("---------------Data---------------");
-//         console.log(error.response.data);
-//         console.log("---------------Status---------------");
-//         console.log(error.response.status);
-//         console.log("---------------Status---------------");
-//         console.log(error.response.headers);
-//       } else if (error.request) {
-
-//         console.log(error.request);
-//       } else {
-
-//         console.log("Error", error.message);
-//       }
-//       console.log(error.config);
     
             })
+
+
+
+
+            //Functions
+
+function activityFunc() {
+    inquirer
+    .prompt([
+        {
+            type: "list",
+            message: "What type of activity would you like to do?",
+            choices: ['charity', 'cooking', 'music', 'diy', 'education', 'social', 'busywork', 'recreational', 'relaxation'],
+            name: "type"
+        }
+    ])
+    .then(function(inquirerResponse) {
+        var queryUrl1 = "http://www.boredapi.com/api/activity?type=" + inquirerResponse.type;
+        var choices = inquirerResponse.type
+
+        axios.get(queryUrl1).then(
+            function(response) {
+                console.log("              Activity")
+                console.log("" + response.data.activity + "!!");
+                if (response.data.participants = 1) {
+                    console.log("This activity requires " + response.data.participants + " person")
+                }
+                else {
+                    console.log("This activity requires at least " + inquirerResponse.data.participants + " people")
+                }
+                console.log("The type of activity is " + response.data.type);
+            })
+    })
+}
