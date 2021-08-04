@@ -1,6 +1,6 @@
 var axios = require("axios");
 var inquirer = require("inquirer");
-var userChoice;
+
 inquirer
 .prompt([
 {
@@ -55,7 +55,7 @@ inquirer
                     ])
                     .then(function(inquirerResponse) {
                         var queryUrl1 = "http://www.boredapi.com/api/activity?type=" + inquirerResponse.type;
-                        userChoice = inquirerResponse.type;
+                        var userChoice = inquirerResponse.type;
 
                         axios.get(queryUrl1).then(
                         function(response) {
@@ -156,10 +156,11 @@ function reRoll(userActivity) {
         {
             type: "confirm",
             message: "Would you like to try another activity in the same category?",
-            name: "reroll"
+            name: "tryAgain"
         }
     ]).then(function(inquirerResponse) {
-        var queryUrl1 = "http://www.boredapi.com/api/activity?type=" + userActivity;
+        if(inquirerResponse.tryAgain) {
+            var queryUrl1 = "http://www.boredapi.com/api/activity?type=" + userActivity;
 
         axios.get(queryUrl1).then(
             function(response) {
@@ -173,5 +174,10 @@ function reRoll(userActivity) {
                 }
                 console.log("The type of activity is " + response.data.type);
             })
+        }
+        else{
+            mainQuestion()
+        }
+        
     })
 }
